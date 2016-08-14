@@ -1,3 +1,5 @@
+//TODO: remove magic numbers
+
 window.onload = function() {
 	
 	var game = new Phaser.Game(480,320,Phaser.CANVAS,"",{preload:onPreload, create:onCreate, update:onUpdate});                
@@ -18,7 +20,6 @@ window.onload = function() {
 	function onCreate() {
 		platformGroup = game.add.group();
 		teleporterGroup = game.add.group();
-		//initializeTeleporters(game);
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.physics.arcade.gravity.y = enemySpeed;
 		enemy = new Enemy(game, 24, 320-24-8, 'enemy', enemySpeed);
@@ -43,14 +44,6 @@ window.onload = function() {
 	}
 
 	function addTeleporter(posX,posY,asset,targetX,targetY,direction){
-		//var teleporter = game.add.sprite(posX,posY,asset)
-		//teleporter.anchor.setTo(0.5);
-		//game.physics.enable(teleporter, Phaser.Physics.ARCADE);
-		//teleporter.body.allowGravity = false;
-		//teleporter.body.immovable = true;
-		//teleporter.targetX = targetX;
-		//teleporter.targetY = targetY;
-		//teleporter.direction = direction;
 		var teleporter = new Teleporter(game, posX,posY,asset,targetX,targetY,direction);
 		teleporterGroup.add(teleporter);	
 	}
