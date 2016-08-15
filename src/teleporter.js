@@ -13,6 +13,7 @@ var Teleporter = function (game, x,y, asset, targetX, targetY, targetDir) {//TOD
 	this.targetX = targetX;
 	this.targetY = targetY;
 	this.targetDir = targetDir;
+	//this.game = game;
 }
 
 Teleporter.prototype = Object.create(Phaser.Sprite.prototype);

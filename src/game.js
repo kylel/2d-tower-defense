@@ -22,24 +22,20 @@ window.onload = function() {
 		teleporterGroup = game.add.group();
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.physics.arcade.gravity.y = enemySpeed;
-		enemy = new Enemy(game, 24, 320-24-8, 'enemy', enemySpeed);
+		enemy = new Enemy(game, 24, 320-24-8, 'enemy', enemySpeed, 2);
 		
-		addPlatform(480/2,316,"ground");
-		addPlatform(480/2,116,"ground");
-		addPlatform(480/2,216,"ground");
-		addTeleporter(480-12, 316-12-4,"teleporter", 480-12, 216-12-4, -1);
+		addPlatform(game.width/2,game.height-4,"ground");
+		addPlatform(game.width/2,116,"ground");
+		addPlatform(game.width/2,216,"ground");
+		addTeleporter(game.width-12, 316-12-4,"teleporter", game.width-12, 216-12-4, -1);
 		addTeleporter(12, 216-12-4,"teleporter", 12, 116-12-4, 1);
-		addHeart(480-12, 116-12-4, "heart");
+		addHeart(game.width-12, 116-12-4, "heart");
 
 		game.input.onDown.add(changeDir, this);	
 	}
 	
 	function addPlatform(posX,posY,asset){
-		var platform = game.add.sprite(posX,posY,asset)
-		platform.anchor.setTo(0.5);
-		game.physics.enable(platform, Phaser.Physics.ARCADE);
-		platform.body.allowGravity = false;
-		platform.body.immovable = true;
+		var platform = new Teleporter(game, posX,posY,asset);
 		platformGroup.add(platform);	
 	}
 
@@ -49,11 +45,7 @@ window.onload = function() {
 	}
 
 	function addHeart(posX,posY,asset){
-		heart = game.add.sprite(posX,posY,asset)
-		heart.anchor.setTo(0.5);
-		game.physics.enable(heart, Phaser.Physics.ARCADE);
-		heart.body.allowGravity = false;
-		heart.body.immovable = true;
+		heart = new Core(game, posX,posY, asset, 2);
 	}
 	
 	function onUpdate() {
@@ -63,9 +55,8 @@ window.onload = function() {
 		enemy.update();
 	}
 	
-	function attackHeart(){     
-		enemy.setPos(24, 320-24-8);
-		enemy.setDir(1);
+	function attackHeart(enem, core){     
+		core.takeDamage(enem);
 	}
 
 	function changeDir(){
@@ -76,9 +67,4 @@ window.onload = function() {
 
 
 
-
-
-var Tower = function (x,y, asset, damage, attackSpeed) {
-
-}
 
