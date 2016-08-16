@@ -23,15 +23,9 @@ window.onload = function() {
 	var teleporterGroup;
 	var heart;
 
-	var ceiling1;
-	var ceiling2;
-	var ceiling3;
-	var ceiling4;
-
-	var floor1;
-	var floor2;
-	var floor3;
-	var floor4;
+	var ceilings = [];
+	var floor = [];
+	var floorCount = 4;
 
 	var towerArea;
 	var infoArea;
@@ -50,56 +44,35 @@ window.onload = function() {
 	}
 
 	function onCreate() {
-		ceiling1 = game.add.sprite(0,0,'ceiling');
-		ceiling2 = game.add.sprite(0,floorHeight,'ceiling');
-		ceiling3 = game.add.sprite(0,floorHeight*2,'ceiling');
-		ceiling4 = game.add.sprite(0,floorHeight*3,'ceiling');
+		for (var i=0; i<floorCount; i++) {
+			ceilings.push(game.add.sprite(0,floorHeight*i,'ceiling'));
+		}
 
 		platformGroup = game.add.group();
 
-		floor1 = game.add.sprite(0,floorHeight-ceiling1.height,'floor');
-		game.physics.enable(floor1, Phaser.Physics.ARCADE);
-		floor1.body.allowGravity = false;
-		floor1.body.immovable = true;
-		platformGroup.add(floor1);
-		floor2 = game.add.sprite(0,floorHeight*2-ceiling1.height,'floor');
-		game.physics.enable(floor2, Phaser.Physics.ARCADE);
-		floor2.body.allowGravity = false;
-		floor2.body.immovable = true;
-		platformGroup.add(floor2);
-		floor3 = game.add.sprite(0,floorHeight*3-ceiling1.height,'floor');
-		game.physics.enable(floor3, Phaser.Physics.ARCADE);
-		floor3.body.allowGravity = false;
-		floor3.body.immovable = true;
-		platformGroup.add(floor3);
-		floor4 = game.add.sprite(0,floorHeight*4-ceiling1.height,'floor');
-		game.physics.enable(floor4, Phaser.Physics.ARCADE);
-		floor4.body.allowGravity = false;
-		floor4.body.immovable = true;
-		platformGroup.add(floor4);
-
+		for(var i=0; i<floorCount; i++) {
+			floor.push(game.add.sprite(0,floorHeight*(i+1)-ceilings[1].height,'floor'));
+			game.physics.enable(floor[i], Phaser.Physics.ARCADE);
+			floor[i].body.allowGravity = false;
+			floor[i].body.immovable = true;
+			platformGroup.add(floor[i]);	
+		}
 		towerArea = game.add.sprite(playWidth,0,'tower-select');
 		infoArea = game.add.sprite(0,playHeight,'info');
 
-
-
-		
 		teleporterGroup = game.add.group();
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.physics.arcade.gravity.y = enemySpeed;
-		enemy = new Enemy(game, 12, playHeight-ceiling1.height-12, 'enemy', enemySpeed, 2);
-		
-		//addPlatform(game.width/2,game.height-4,"ground");
-		//addPlatform(game.width/2,116,"ground");
-		//addPlatform(game.width/2,216,"ground");
-		addTeleporter(playWidth-12, playHeight-ceiling1.height-12,"teleporter", 
+		enemy = new Enemy(game, 12, playHeight-ceilings[1].height-12, 'enemy', enemySpeed, 2);
+
+		addTeleporter(playWidth-12, playHeight-ceilings[1].height-12,"teleporter", 
 			playWidth-12, playHeight-floorHeight-15-12, -1);
 		addTeleporter(12, playHeight-floorHeight-15-12,"teleporter", 
 			12, playHeight-floorHeight*2-15-12, 1);
-		addTeleporter(playWidth-12, playHeight-floorHeight*2-ceiling1.height-12,"teleporter", 
+		addTeleporter(playWidth-12, playHeight-floorHeight*2-ceilings[1].height-12,"teleporter", 
 			playWidth-12, playHeight-floorHeight*3-15-12, -1);
 		
-		addHeart(12, floorHeight-12-floor1.height, "heart");
+		addHeart(12, floorHeight-12-floor[1].height, "heart");
 
 		game.input.onDown.add(changeDir, this);	
 	}
