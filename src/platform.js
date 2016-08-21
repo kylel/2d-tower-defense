@@ -1,7 +1,7 @@
 
 var Platform = function (game, x,y, asset) {
 	Phaser.Sprite.call(this, game, x, y, asset);
-	this.anchor.setTo(0.5);
+	this.anchor.setTo(0,1);
 	game.add.existing(this);
 	game.physics.enable(this, Phaser.Physics.ARCADE);
 	this.body.allowGravity = false;

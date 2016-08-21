@@ -6,6 +6,8 @@ var Enemy = function (game, x,y, asset, speed, damage) {
 	game.physics.enable(this, Phaser.Physics.ARCADE);
 	this.body.velocity.x = speed;
 	this.damage = damage || 1;
+	this.animations.add('walk', [0,1,2], true);
+	this.animations.play('walk', 4, true);
 }
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -13,6 +15,7 @@ Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.update = function() {
 	//TODO
+
 }
 
 Enemy.prototype.changeDir = function() {
@@ -26,6 +29,7 @@ Enemy.prototype.die = function() {
 
 Enemy.prototype.setDir = function(direction) {
 	this.body.velocity.x = this.speed * direction;
+	this.scale.x = direction;
 }
 
 Enemy.prototype.setPos = function(x, y) {

@@ -5,7 +5,9 @@ function teleportEnemy(enemy, teleporter){
 
 var Teleporter = function (game, x,y, asset, targetX, targetY, targetDir) {//TODO: add target asset
 	Phaser.Sprite.call(this, game, x, y, asset);
-	this.anchor.setTo(0.5);
+	this.anchor.setTo(0.5,0.5);
+	this.scale.x *= targetDir*-1;
+	//this.anchor.setTo(0,1);
 	game.add.existing(this);
 	game.physics.enable(this, Phaser.Physics.ARCADE);
 	this.body.allowGravity = false;
