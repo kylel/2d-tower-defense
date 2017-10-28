@@ -1,6 +1,6 @@
 var Enemy = function (game, x,y, asset, speed, damage) {
 	Phaser.Sprite.call(this, game, x, y, asset);
-	this.anchor.setTo(0.5);
+	//this.anchor.setTo(0.5);
 	this.speed = speed;
 	game.add.existing(this);
 	game.physics.enable(this, Phaser.Physics.ARCADE);
